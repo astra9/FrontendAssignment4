@@ -33,14 +33,14 @@ WARNING!!! WARNING!!!
 // Wrap the entire contents of script.js inside of an IIFE
 // See Lecture 52, part 2
 // (Note, Step 2 will be done in the SpeakHello.js file.)
+(function() {
 
 var names = ["Yaakov", "John", "Jen", "Jason", "Paul", "Frank", "Larry", "Paula", "Laura", "Jim"];
-
 // STEP 10:
 // Loop over the names array and say either 'Hello' or "Good Bye"
 // using either the helloSpeaker's or byeSpeaker's 'speak' method.
 // See Lecture 50, part 1
-for (/* fill in parts of the 'for' loop to loop over names array */) {
+for (let name of names) {
 
   // STEP 11:
   // Retrieve the first letter of the current name in the loop.
@@ -49,16 +49,56 @@ for (/* fill in parts of the 'for' loop to loop over names array */) {
   // string object's 'toLowerCase' method on the result so we can compare
   // to lower case character 'j' afterwards.
   // Look up these methods on Mozilla Developer Network web site if needed.
-  // var firstLetter =
-
+  var firstLetter = name.charAt(0).toLowerCase();
   // STEP 12:
   // Compare the 'firstLetter' retrieved in STEP 11 to lower case
   // 'j'. If the same, call byeSpeaker's 'speak' method with the current name
   // in the loop. Otherwise, call helloSpeaker's 'speak' method with the current
   // name in the loop.
-  if (/* fill in condition here */) {
-    // byeSpeaker.xxxx
+  if (firstLetter==="j") {
+    byeSpeaker.speak(name)
   } else {
-    // helloSpeaker.xxxx
+    helloSpeaker.speak(name)
   }
 }
+
+console.log("============PART 2==================")
+
+function sayGreeting(name){
+  var firstLetter = name.charAt(0).toLowerCase();
+  if (firstLetter==="j") {
+    return byeSpeaker.speakSimple(name)
+  } else {
+    return helloSpeaker.speakSimple(name)
+  }
+}
+
+var greetings = names.map(name => sayGreeting(name) )
+
+for(let greeting of greetings){
+  console.log(greeting)
+}
+
+console.log("============OPTIONAL PART==================")
+
+function sayGreetingsTwo(currentValue){
+  var firstLetter = currentValue.charAt(0).toLowerCase();
+  if (firstLetter==="j") {
+    initialValue.bye.push(byeSpeaker.speakSimple(currentValue))
+  } else {
+    initialValue.hello.push(helloSpeaker.speakSimple(currentValue))
+  }
+}
+
+initialValue= {hello: [], bye: []}
+names.reduce((previousValue, currentValue) => sayGreetingsTwo(currentValue), initialValue)
+
+for(let greeting of initialValue.hello){
+  console.log(greeting)
+}
+
+for(let greeting of initialValue.bye){
+  console.log(greeting)
+}
+
+})()
